@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Http\Requests\ArticleRequest as Request;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -14,7 +15,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = auth()->user()->articles()->latest()->paginate(10);
+        $articles = auth()->user()->articles()->latest()->paginate(5);
         return view('articles.index', compact('articles'));
     }
 
@@ -50,7 +51,7 @@ class ArticleController extends Controller
             );
 
             return redirect()->route('articles.index')->withSuccess(
-                __('common.success_msg')
+                __('common.created', ['title' => $request->title])
             );
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->withError(
@@ -78,7 +79,7 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        //
+        return view('articles.edit', compact('article'));
     }
 
     /**
@@ -90,7 +91,32 @@ class ArticleController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        //
+        try {
+            $imagePath = $article->image;
+            if ($request->hasFile('image')) {
+
+                if ($article->image && Storage::exists($article->image)) {
+                    Storage::delete($article->image);
+                }
+
+                $fileName = uniqid() . '.' . $request->image->extension();
+                $imagePath = $request->image->storeAs('public/images/articles', $fileName);
+            }
+
+            $article->update(
+                $request->only(['title', 'details', 'is_published']) + [
+                    'image' => $imagePath
+                ]
+            );
+
+            return redirect()->route('articles.index')->withSuccess(
+                __('common.updated', ['title' => $article->title])
+            );
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->withError(
+                $e->getMessage()
+            );
+        }
     }
 
     /**
@@ -101,6 +127,19 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        //
+        try {
+            $title = $article->title;
+
+            if ($article->image && Storage::exists($article->image)) {
+                Storage::delete($article->image);
+            }
+
+            $article->delete();
+            return redirect()->back()->withSuccess(__('common.created', ['title' => $title]));
+        } catch (\Exception $exception) {
+            return redirect()->back()->withError(
+                $exception->getMessage()
+            );
+        }
     }
 }

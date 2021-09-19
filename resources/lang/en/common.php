@@ -13,5 +13,7 @@ return [
     |
     */
 
-    'success_msg' => 'A new record created',
+    'created' => ':TITLE Created Successfully',
+    'updated' => ':TITLE Updated',
+    'deleted' => ':TITLE has been deleted',
 ];
