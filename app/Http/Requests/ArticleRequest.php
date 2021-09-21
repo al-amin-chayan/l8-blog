@@ -13,16 +13,16 @@ class ArticleRequest extends Request
      */
     public function authorize()
     {
-        if (request()->route()->getName() === 'articles.store')
+        if (request()->route()->getName() === 'articles.update')
         {
-            return true;
+            $article = Article::findOrFail(
+                request()->segment(2)
+            );
+
+            return $article->user_id === auth()->id();
         }
 
-        $article = Article::findOrFail(
-            request()->segment(2)
-        );
-
-        return $article->user_id === auth()->id();
+        return true;
     }
 
     /**

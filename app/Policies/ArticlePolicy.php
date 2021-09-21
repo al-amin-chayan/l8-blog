@@ -91,7 +91,7 @@ class ArticlePolicy
      */
     public function restore(User $user, Article $article)
     {
-        //
+        return $user->isAdministrator();
     }
 
     /**
@@ -103,6 +103,6 @@ class ArticlePolicy
      */
     public function forceDelete(User $user, Article $article)
     {
-        //
+        return $user->isAdministrator();
     }
 }

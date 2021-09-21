@@ -134,12 +134,76 @@ class ArticleController extends Controller
         try {
             $title = $article->title;
 
+            /*if ($article->image && Storage::exists($article->image)) {
+                Storage::delete($article->image);
+            }*/
+
+            $article->delete();
+            return redirect()->back()->withSuccess(__('common.created', ['title' => $title]));
+        } catch (\Exception $exception) {
+            return redirect()->back()->withError(
+                $exception->getMessage()
+            );
+        }
+    }
+
+    /**
+     * Display a listing of the deleted resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function trashed()
+    {
+        $this->authorize('trashed-articles');
+        $articles = Article::with('user')->onlyTrashed()->latest()->paginate(10);
+        return view('articles.trashed', compact('articles'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Article  $article
+     * @return \Illuminate\Http\Response
+     */
+    public function restore(\Illuminate\Http\Request $request, $articleId)
+    {
+        $article = Article::withTrashed()->findOrFail($articleId);
+        $this->authorize('restore', $article);
+
+        try {
+            $article->restore();
+
+            return redirect()->back()->withSuccess(
+                __('common.restored', ['title' => $article->title])
+            );
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->withError(
+                $e->getMessage()
+            );
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Article  $article
+     * @return \Illuminate\Http\Response
+     */
+    public function erase($articleId)
+    {
+        $article = Article::withTrashed()->findOrFail($articleId);
+        $this->authorize('forceDelete', $article);
+
+        try {
+            $title = $article->title;
+
             if ($article->image && Storage::exists($article->image)) {
                 Storage::delete($article->image);
             }
 
-            $article->delete();
-            return redirect()->back()->withSuccess(__('common.created', ['title' => $title]));
+            $article->forceDelete();
+            return redirect()->back()->withSuccess(__('common.erased', ['title' => $title]));
         } catch (\Exception $exception) {
             return redirect()->back()->withError(
                 $exception->getMessage()

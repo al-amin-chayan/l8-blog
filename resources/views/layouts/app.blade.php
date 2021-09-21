@@ -53,11 +53,13 @@
                             @endif
                         @else
                             <li class="nav-item">
-                                <a class="nav-link active" href="{{ route('articles.index') }}">Articles</a>
+                                <a class="nav-link{{ request()->routeIs('articles.index', 'articles.edit', 'articles.create') ? ' active' : '' }}" href="{{ route('articles.index') }}">Articles</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Link</a>
-                            </li>
+                            @can('trashed-articles')
+                                <li class="nav-item">
+                                    <a class="nav-link{{ request()->routeIs('articles.trashed') ? ' active' : '' }}" href="{{ route('articles.trashed') }}">Deleted Article</a>
+                                </li>
+                            @endcan
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Link</a>
                             </li>

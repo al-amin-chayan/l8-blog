@@ -16,4 +16,6 @@ return [
     'created' => ':TITLE Created Successfully',
     'updated' => ':TITLE Updated',
     'deleted' => ':TITLE has been deleted',
+    'restored' => ':TITLE has been restored',
+    'erased' => ':TITLE has been removed from Database',
 ];

@@ -28,8 +28,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        /*Gate::define('update-article', function (User $user, Article $article) {
-            return $user->id === $article->user_id;
-        });*/
+        Gate::define('trashed-articles', function (User $user) {
+            return $user->isAdministrator();
+        });
     }
 }
