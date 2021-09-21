@@ -91,6 +91,8 @@ class ArticleController extends Controller
      */
     public function update(Request $request, Article $article)
     {
+        $this->authorize('update', $article);
+
         try {
             $imagePath = $article->image;
             if ($request->hasFile('image')) {
@@ -127,6 +129,8 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
+        $this->authorize('delete', $article);
+
         try {
             $title = $article->title;
 

@@ -13,6 +13,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    private const ADMINISTRATOR_ID = 1;
     /**
      * The attributes that are mass assignable.
      *
@@ -69,5 +70,10 @@ class User extends Authenticatable
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);
+    }
+
+    public function isAdministrator()
+    {
+        return $this->id === self::ADMINISTRATOR_ID;
     }
 }
