@@ -7,15 +7,11 @@
             <div class="card">
                 <div class="card-header">
                     {{ __('Tags') }}
-                    <a class="btn-sm float-right btn-primary" href="{{ route('tags.create') }}" role="button">Create New</a>
+                    @include('components.buttons.create', ['item' => 'tag'])
                 </div>
 
                 <div class="card-body">
-                    @if (session()->has('success'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('success') }}
-                        </div>
-                    @endif
+                    @include('components.alerts.success')
                     <table class="table">
                         <thead>
                         <tr>
@@ -40,12 +36,8 @@
                                 <td>{{ $tag->updated_at->diffForHumans() }}</td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Action Items">
-                                        <a class="btn btn-primary btn-sm" href="{{ route('tags.edit', [$tag->id]) }}" role="button">Edit</a>
-                                        <form method="post" action="{{ route('tags.update', [$tag->id]) }}">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete &quot;{{ $tag->name }}&quot;?');">Delete</button>
-                                        </form>
+                                        @include('components.buttons.edit', ['item' => 'tag'])
+                                        @include('components.buttons.delete', ['item' => 'tag', 'title' => $tag->name])
                                     </div>
 
                                 </td>

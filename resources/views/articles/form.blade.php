@@ -1,9 +1,6 @@
 @csrf
-<div class="form-group">
-    <label for="title">Title</label>
-    <input type="text" class="form-control{{ $errors->has('title') ? ' is-invalid' : ''}}" id="title" name="title" value="{{ old('title', $article->title ?? '') }}">
-    {!! $errors->first('title', '<div class="invalid-feedback">:message</div>') !!}
-</div>
+@include('components.inputs.text', ['name' => 'title', 'model' => $article ?? null])
+
 <div class="form-group">
     <label for="details">Details</label>
     <textarea class="form-control{{ $errors->has('details') ? ' is-invalid' : ''}}" id="details" rows="20" name="details">{{ old('details', $article->details ?? '') }}</textarea>

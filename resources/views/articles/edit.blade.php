@@ -7,15 +7,11 @@
             <div class="card">
                 <div class="card-header">
                     {{ __('Update Article#' . $article->id) }}
-                    <a class="btn-sm float-right btn-primary" href="{{ url()->previous() }}" role="button">&laquo; Back</a>
+                    @include('components.buttons.back')
                 </div>
 
                 <div class="card-body">
-                    @if (session()->has('error'))
-                        <div class="alert alert-danger" role="alert">
-                            {{ session('error') }}
-                        </div>
-                    @endif
+                    @include('components.alerts.error')
                     <form enctype="multipart/form-data" method="post" action="{{ route('articles.update', [$article->id]) }}">
                         @method('PATCH')
                         @if(Storage::exists($article->image))

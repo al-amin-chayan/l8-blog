@@ -7,15 +7,11 @@
             <div class="card">
                 <div class="card-header">
                     {{ __('Create Tag') }}
-                    <a class="btn-sm float-right btn-primary" href="{{ route('tags.index') }}" role="button">&laquo; Back</a>
+                    @include('components.buttons.back')
                 </div>
 
                 <div class="card-body">
-                    @if (session()->has('error'))
-                        <div class="alert alert-danger" role="alert">
-                            {{ session('error') }}
-                        </div>
-                    @endif
+                    @include('components.alerts.error')
                     <form method="post" action="{{ route('tags.store') }}">
                         @include('tags.form', ['action' => 'Create'])
                     </form>

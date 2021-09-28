@@ -10,11 +10,7 @@
                 </div>
 
                 <div class="card-body">
-                    @if (session()->has('success'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('success') }}
-                        </div>
-                    @endif
+                    @include('components.alerts.success')
                     <table class="table">
                         <thead>
                         <tr>
