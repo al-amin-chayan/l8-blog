@@ -34,7 +34,7 @@
                                 <td>{{ $article->title }}</td>
                                 <td>{{ $article->views }}</td>
                                 <td>
-                                    <img src="{{ Storage::exists($article->image) ? Storage::url($article->image) : 'https://picsum.photos/id/237/100/100' }}" class="img-thumbnail" alt="{{ $article->title }}">
+                                    <img src="{{ Storage::exists($article?->image?->url) ? Storage::url($article->image->url) : 'https://picsum.photos/id/237/100/100' }}" class="img-thumbnail" alt="{{ $article->title }}">
                                 </td>
                                 <td>{{ $article->created_at }}</td>
                                 <td>{{ $article->updated_at->diffForHumans() }}</td>

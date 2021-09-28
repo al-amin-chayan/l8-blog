@@ -16,7 +16,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = auth()->user()->articles()->latest()->paginate(5);
+        $articles = auth()->user()->articles()->with('image')->latest()->paginate(10);
         return view('articles.index', compact('articles'));
     }
 
@@ -49,11 +49,9 @@ class ArticleController extends Controller
                 $imagePath = $request->image->storeAs('public/images/articles', $fileName);
             }
 
-            $article = auth()->user()->articles()->create(
-                $request->only(['title', 'details', 'is_published']) + [
-                    'image' => $imagePath
-                ]
-            );
+            $article = auth()->user()->articles()->create($request->all());
+
+            $article->image()->create(['url' => $imagePath]);
 
             $article->tags()->attach($request->tag_id);
             return redirect()->route('articles.index')->withSuccess(
@@ -101,24 +99,23 @@ class ArticleController extends Controller
     public function update(Request $request, Article $article)
     {
         $this->authorize('update', $article);
-
+        $article->load('image');
         try {
-            $imagePath = $article->image;
             if ($request->hasFile('image')) {
-
-                if ($article->image && Storage::exists($article->image)) {
-                    Storage::delete($article->image);
-                }
 
                 $fileName = uniqid() . '.' . $request->image->extension();
                 $imagePath = $request->image->storeAs('public/images/articles', $fileName);
+                if ($article->image()->exists()) {
+                    if (Storage::exists($article->image->url)) {
+                        Storage::delete($article->image->url);
+                    }
+                    $article->image()->update(['url' => $imagePath]);
+                } else {
+                    $article->image()->create(['url' => $imagePath]);
+                }
             }
 
-            $article->update(
-                $request->only(['title', 'details', 'is_published']) + [
-                    'image' => $imagePath
-                ]
-            );
+            $article->update($request->all());
 
             $article->tags()->sync($request->tag_id);
 
@@ -144,10 +141,6 @@ class ArticleController extends Controller
 
         try {
             $title = $article->title;
-
-            /*if ($article->image && Storage::exists($article->image)) {
-                Storage::delete($article->image);
-            }*/
 
             $article->delete();
             return redirect()->back()->withSuccess(__('common.created', ['title' => $title]));
@@ -205,12 +198,16 @@ class ArticleController extends Controller
     {
         $article = Article::withTrashed()->findOrFail($articleId);
         $this->authorize('forceDelete', $article);
+        $article->load('image');
 
         try {
             $title = $article->title;
 
-            if ($article->image && Storage::exists($article->image)) {
-                Storage::delete($article->image);
+            if ($article->image()->exists()) {
+                if (Storage::exists($article->image->url)) {
+                    Storage::delete($article->image->url);
+                }
+                $article->image()->delete();
             }
 
             $article->forceDelete();

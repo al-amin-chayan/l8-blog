@@ -14,9 +14,9 @@
                     @include('components.alerts.error')
                     <form enctype="multipart/form-data" method="post" action="{{ route('articles.update', [$article->id]) }}">
                         @method('PATCH')
-                        @if(Storage::exists($article->image))
+                        @if(Storage::exists($article?->image?->url))
                             <picture>
-                                <img src="{{ Storage::url($article->image) }}" class="img-fluid img-thumbnail" alt="{{ $article->title }}">
+                                <img src="{{ Storage::url($article->image->url) }}" class="img-fluid img-thumbnail" alt="{{ $article->title }}">
                             </picture>
                         @endif
                         @include('articles.form', ['action' => 'Update'])
