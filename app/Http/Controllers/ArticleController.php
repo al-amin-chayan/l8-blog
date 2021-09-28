@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Http\Requests\ArticleRequest as Request;
+use App\Models\Tag;
 use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
@@ -26,7 +27,9 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        return view('articles.create');
+        $tags = Tag::pluck('name', 'id');
+
+        return view('articles.create', compact('tags'));
     }
 
     /**
@@ -37,6 +40,8 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Article::class);
+
         try {
             $imagePath = null;
             if ($request->hasFile('image')) {
@@ -44,12 +49,13 @@ class ArticleController extends Controller
                 $imagePath = $request->image->storeAs('public/images/articles', $fileName);
             }
 
-            auth()->user()->articles()->create(
+            $article = auth()->user()->articles()->create(
                 $request->only(['title', 'details', 'is_published']) + [
                     'image' => $imagePath
                 ]
             );
 
+            $article->tags()->attach($request->tag_id);
             return redirect()->route('articles.index')->withSuccess(
                 __('common.created', ['title' => $request->title])
             );
@@ -79,7 +85,10 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        return view('articles.edit', compact('article'));
+        $tags = Tag::pluck('name', 'id');
+
+        $tag_ids = $article->tags()->pluck('id')->toArray();
+        return view('articles.edit', compact('tags', 'tag_ids', 'article'));
     }
 
     /**
@@ -110,6 +119,8 @@ class ArticleController extends Controller
                     'image' => $imagePath
                 ]
             );
+
+            $article->tags()->sync($request->tag_id);
 
             return redirect()->route('articles.index')->withSuccess(
                 __('common.updated', ['title' => $article->title])

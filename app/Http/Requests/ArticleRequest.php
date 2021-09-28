@@ -33,10 +33,11 @@ class ArticleRequest extends Request
     public function rules()
     {
         return [
-            'title' => 'required|min:1|max:255',
-            'details' => 'required|min:1',
+            'title' => 'required|min:10|max:255',
+            'details' => 'required|min:50',
             'images' => 'nullable|image',
             'is_published' => 'nullable',
+            'tag_id' => 'required|array',
         ];
     }
 }

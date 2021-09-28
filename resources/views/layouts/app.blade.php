@@ -60,6 +60,11 @@
                                     <a class="nav-link{{ request()->routeIs('articles.trashed') ? ' active' : '' }}" href="{{ route('articles.trashed') }}">Deleted Article</a>
                                 </li>
                             @endcan
+                            @can('create', \App\Models\Tag::class)
+                                <li class="nav-item">
+                                    <a class="nav-link{{ request()->routeIs('tags.*') ? ' active' : '' }}" href="{{ route('tags.index') }}">Tags</a>
+                                </li>
+                            @endcan
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Link</a>
                             </li>

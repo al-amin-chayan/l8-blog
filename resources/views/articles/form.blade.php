@@ -13,8 +13,20 @@
     <label for="image">Article Image</label>
     <input type="file" class="form-control-file" id="image" name="image">
 </div>
+
+<div class="form-group">
+    <label for="tag_id">Tags</label>
+    <select name="tag_id[]" class="custom-select form-control{{ $errors->has('tag_id') ? ' is-invalid' : ''}}" multiple>
+        @foreach($tags as $tag_id => $tag)
+            <option value="{{ $tag_id }}"{{ in_array($tag_id, old('tag_id', $tag_ids ?? [])) ? ' selected' : '' }}>{{ $tag }}</option>
+        @endforeach
+    </select>
+    {!! $errors->first('tag_id', '<div class="invalid-feedback">:message</div>') !!}
+</div>
+
 <div class="form-group form-check">
     <input type="checkbox" class="form-check-input" id="is_published" value="1" name="is_published" {{ old('is_published', $article->is_published ?? '') == '1' ? 'checked' : '' }}>
     <label class="form-check-label" for="is_published">Publish this Article</label>
 </div>
+
 <button type="submit" class="btn btn-primary">{{ $action }}</button>

@@ -28,6 +28,7 @@ Route::middleware(['auth'])->group(function () {
         ->name('articles.erase');
 
     Route::resource('/articles', \App\Http\Controllers\ArticleController::class);
+    Route::resource('/tags', \App\Http\Controllers\TagController::class);
 
 });
 
