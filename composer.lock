@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dbd1569307bd672b91330901ae7789f3",
+    "content-hash": "767b258bd277bfe97fefac50e9df6592",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -878,6 +878,69 @@
             "time": "2021-06-30T20:03:07+00:00"
         },
         {
+            "name": "kalnoy/nestedset",
+            "version": "v5.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lazychaser/laravel-nestedset.git",
+                "reference": "cd0fecb79d2df8192fb4e1db264b2172a5b4280f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lazychaser/laravel-nestedset/zipball/cd0fecb79d2df8192fb4e1db264b2172a5b4280f",
+                "reference": "cd0fecb79d2df8192fb4e1db264b2172a5b4280f",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "~5.7.0|~5.8.0|^6.0|^7.0|^8.41",
+                "illuminate/events": "~5.7.0|~5.8.0|^6.0|^7.0|^8.41",
+                "illuminate/support": "~5.7.0|~5.8.0|^6.0|^7.0|^8.41",
+                "php": ">=7.1.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "7.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "v5.0.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Kalnoy\\Nestedset\\NestedSetServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Kalnoy\\Nestedset\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Kalnoy",
+                    "email": "lazychaser@gmail.com"
+                }
+            ],
+            "description": "Nested Set Model for Laravel 5.7 and up",
+            "keywords": [
+                "database",
+                "hierarchy",
+                "laravel",
+                "nested sets",
+                "nsm"
+            ],
+            "support": {
+                "issues": "https://github.com/lazychaser/laravel-nestedset/issues",
+                "source": "https://github.com/lazychaser/laravel-nestedset/tree/v5.0.4"
+            },
+            "time": "2021-05-28T07:05:38+00:00"
+        },
+        {
             "name": "laravel/framework",
             "version": "v8.61.0",
             "source": {
@@ -1299,6 +1362,78 @@
                 "source": "https://github.com/laravel/ui/tree/v3.3.0"
             },
             "time": "2021-05-25T16:45:33+00:00"
+        },
+        {
+            "name": "laravelcollective/html",
+            "version": "v6.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/LaravelCollective/html.git",
+                "reference": "ae15b9c4bf918ec3a78f092b8555551dd693fde3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/LaravelCollective/html/zipball/ae15b9c4bf918ec3a78f092b8555551dd693fde3",
+                "reference": "ae15b9c4bf918ec3a78f092b8555551dd693fde3",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/http": "^6.0|^7.0|^8.0",
+                "illuminate/routing": "^6.0|^7.0|^8.0",
+                "illuminate/session": "^6.0|^7.0|^8.0",
+                "illuminate/support": "^6.0|^7.0|^8.0",
+                "illuminate/view": "^6.0|^7.0|^8.0",
+                "php": ">=7.2.5"
+            },
+            "require-dev": {
+                "illuminate/database": "^6.0|^7.0|^8.0",
+                "mockery/mockery": "~1.0",
+                "phpunit/phpunit": "~8.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "6.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Collective\\Html\\HtmlServiceProvider"
+                    ],
+                    "aliases": {
+                        "Form": "Collective\\Html\\FormFacade",
+                        "Html": "Collective\\Html\\HtmlFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Collective\\Html\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Adam Engebretson",
+                    "email": "adam@laravelcollective.com"
+                },
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylorotwell@gmail.com"
+                }
+            ],
+            "description": "HTML and Form Builders for the Laravel Framework",
+            "homepage": "https://laravelcollective.com",
+            "support": {
+                "issues": "https://github.com/LaravelCollective/html/issues",
+                "source": "https://github.com/LaravelCollective/html"
+            },
+            "time": "2020-12-15T20:20:05+00:00"
         },
         {
             "name": "league/commonmark",
@@ -2103,6 +2238,71 @@
                 "source": "https://github.com/opis/closure/tree/3.6.2"
             },
             "time": "2021-04-09T13:42:10+00:00"
+        },
+        {
+            "name": "phpcollective/menumaker",
+            "version": "v1.0.14",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpcollective/menumaker.git",
+                "reference": "07b6a1d70ce00ecefa8fa35db310fd60f7cf2f05"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpcollective/menumaker/zipball/07b6a1d70ce00ecefa8fa35db310fd60f7cf2f05",
+                "reference": "07b6a1d70ce00ecefa8fa35db310fd60f7cf2f05",
+                "shasum": ""
+            },
+            "require": {
+                "kalnoy/nestedset": "^5.0",
+                "laravel/framework": ">=5.7",
+                "laravelcollective/html": ">=5.7",
+                "php": ">=7.1.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "PhpCollective\\MenuMaker\\MenuServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/Storage/seeds",
+                    "src/Storage/factories"
+                ],
+                "files": [
+                    "src/Http/helpers.php"
+                ],
+                "psr-4": {
+                    "PhpCollective\\MenuMaker\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Al Amin Chayan",
+                    "email": "mail@chayan.me"
+                }
+            ],
+            "description": "An elegant multi level menu system for the Laravel framework.",
+            "keywords": [
+                "laravel menu system",
+                "menu maker",
+                "menu tree"
+            ],
+            "support": {
+                "issues": "https://github.com/phpcollective/menumaker/issues",
+                "source": "https://github.com/phpcollective/menumaker/tree/master"
+            },
+            "time": "2020-07-03T16:47:07+00:00"
         },
         {
             "name": "phpcollective/tracker",
