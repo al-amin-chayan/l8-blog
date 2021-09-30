@@ -17,6 +17,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/tags/{tag}/{slug?}', [\App\Http\Controllers\TagController::class, 'show'])
+    ->name('tags.show');
+
+Route::get('/articles/{article}/{slug?}', [\App\Http\Controllers\ArticleController::class, 'show'])
+    ->name('articles.show');
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/articles/trashed', [\App\Http\Controllers\ArticleController::class, 'trashed'])
         ->name('articles.trashed');
@@ -27,9 +33,12 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/articles/erase/{article}', [\App\Http\Controllers\ArticleController::class, 'erase'])
         ->name('articles.erase');
 
-    Route::resource('/articles', \App\Http\Controllers\ArticleController::class);
-    Route::resource('/tags', \App\Http\Controllers\TagController::class);
+    Route::resource('/articles', \App\Http\Controllers\ArticleController::class)->except(['show']);
 
+    Route::resource('/tags', \App\Http\Controllers\TagController::class)->except(['show']);
+
+    Route::post('comments', [\App\Http\Controllers\CommentController::class, 'store'])
+        ->name('comments.store');
 });
 
 Auth::routes();

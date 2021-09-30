@@ -59,11 +59,14 @@ class TagController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Tag  $tag
+     * @param  ?string $slug
      * @return \Illuminate\Http\Response
      */
-    public function show(Tag $tag)
+    public function show(Tag $tag, ?string $slug = null)
     {
-        //
+        $tag->load(['comments', 'comments.user']);
+        $articles = $tag->articles()->simplePaginate(10);
+        return view('tags.show', compact('tag', 'articles'));
     }
 
     /**
