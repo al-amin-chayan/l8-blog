@@ -66,7 +66,7 @@
                                 </li>
                             @endcan
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Link</a>
+                                <a class="nav-link{{ request()->routeIs('featured-articles.*') ? ' active' : '' }}" href="{{ route('featured-articles.index') }}">Featured Article</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>

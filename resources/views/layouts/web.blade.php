@@ -25,7 +25,7 @@
 
     @include('components.nav')
 
-{{--    @include('components.featured-posts')--}}
+    @include('components.featured-posts')
 </div>
 
 <main role="main" class="container">

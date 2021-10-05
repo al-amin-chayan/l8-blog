@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Str;
 
 class Tag extends Model
@@ -46,9 +47,12 @@ class Tag extends Model
         $this->attributes['slug'] = Str::slug($value, '-');
     }
 
-    public function articles(): BelongsToMany
+    /**
+     * Get all of the articles that are assigned this tag.
+     */
+    public function articles(): MorphToMany
     {
-        return $this->belongsToMany(Article::class);
+        return $this->morphedByMany(Article::class, 'taggable');
     }
 
     /**

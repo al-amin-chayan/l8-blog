@@ -93,4 +93,9 @@ class User extends Authenticatable
     {
         return $this->morphMany(Comment::class, 'commentable');
     }
+
+    public function featuredArticles()
+    {
+        return $this->hasManyThrough(FeaturedArticle::class, Article::class);
+    }
 }
