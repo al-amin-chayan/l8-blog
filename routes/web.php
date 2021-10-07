@@ -20,6 +20,11 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/inactive-user', [\App\Http\Controllers\HomeController::class, 'inactive'])
+        ->name('user.inactive');
+    Route::get('/activate-user', [\App\Http\Controllers\HomeController::class, 'activate'])
+        ->name('user.activate');
+
     Route::get('/articles/trashed', [\App\Http\Controllers\ArticleController::class, 'trashed'])
         ->name('articles.trashed');
 

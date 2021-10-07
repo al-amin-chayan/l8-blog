@@ -69,7 +69,10 @@
                                 <a class="nav-link{{ request()->routeIs('featured-articles.*') ? ' active' : '' }}" href="{{ route('featured-articles.index') }}">Featured Article</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                                <a class="nav-link" href="{{ route('user.inactive') }}">Inactive</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('user.activate') }}">Active</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
