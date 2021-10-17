@@ -36,6 +36,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('/articles', \App\Http\Controllers\ArticleController::class)->except(['show']);
 
+    Route::resource('/notifications', \App\Http\Controllers\NotificationController::class)->only(['index', 'destroy']);
+
     Route::resource('/featured-articles', \App\Http\Controllers\FeaturedArticleController::class)->except(['show']);
 
     Route::resource('/tags', \App\Http\Controllers\TagController::class)->except(['show']);

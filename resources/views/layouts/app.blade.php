@@ -18,6 +18,15 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        .table tr.unread {
+            font-weight: 700 !important;
+            color: #0c5460 !important;
+        }
+        .table tr.read {
+            color: #1d643b !important;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
@@ -73,6 +82,9 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('user.activate') }}">Active</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('notifications.index') }}">Notifications ({{ auth()->user()->unreadNotifications()->count() }})</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

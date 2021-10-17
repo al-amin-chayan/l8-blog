@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Http\Requests\ArticleRequest as Request;
 use App\Models\Tag;
+use App\Models\User;
+use App\Notifications\ArticlePublished;
 use Illuminate\Support\Facades\Storage;
+use Notification;
 
 class ArticleController extends Controller
 {
@@ -40,7 +43,7 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('create', Article::class);
+//        $this->authorize('create', Article::class);
 
         try {
             $imagePath = null;
@@ -54,6 +57,9 @@ class ArticleController extends Controller
             $article->image()->create(['url' => $imagePath]);
 
             $article->tags()->attach($request->tag_id);
+
+            Notification::send(User::where('id', '!=', auth()->id())->get(), new ArticlePublished($article));
+
             return redirect()->route('articles.index')->withSuccess(
                 __('common.created', ['title' => $request->title])
             );
