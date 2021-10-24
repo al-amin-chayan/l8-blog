@@ -40,6 +40,7 @@
                                 <td>{{ $article->updated_at->diffForHumans() }}</td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Action Items">
+                                        <a class="btn btn-info btn-sm" href="{{ route('articles.download', [$article->id]) }}" role="button">Download</a>
                                         @include('components.buttons.edit', ['item' => 'article'])
                                         @include('components.buttons.delete', ['item' => 'article', 'title' => $article->title])
                                     </div>

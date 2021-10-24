@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ArticleExport;
 use App\Models\Article;
 use App\Http\Requests\ArticleRequest as Request;
 use App\Models\Tag;
 use App\Models\User;
 use App\Notifications\ArticlePublished;
+use Maatwebsite\Excel\Facades\Excel;
+use PDF;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
 use Notification;
 
@@ -138,6 +142,21 @@ class ArticleController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Article  $article
+     * @return \Illuminate\Http\Response
+     */
+    public function download(Article $article)
+    {
+//        $pdf = App::make('dompdf.wrapper');
+//        $pdf->loadHTML('<h1>' . $article->title . '</h1>');
+//        return $pdf->stream();
+        $pdf = PDF::loadView('articles.download', compact('article'));
+        return $pdf->download($article->id . '.pdf');
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Article  $article
@@ -225,5 +244,10 @@ class ArticleController extends Controller
                 $exception->getMessage()
             );
         }
+    }
+
+    public function export()
+    {
+        return Excel::download(new ArticleExport(), 'articles.xlsx');
     }
 }
